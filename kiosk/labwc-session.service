@@ -1,0 +1,24 @@
+[Unit]
+Description=Labwc Wayland compositor session
+After=graphical.target
+Wants=graphical.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+Environment=HOME=/home/pi
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=DISPLAY=:0
+Environment=WAYLAND_DISPLAY=wayland-1
+Environment=XDG_SESSION_TYPE=wayland
+WorkingDirectory=/home/pi
+ExecStart=/usr/bin/labwc -C /etc/xdg/labwc
+ExecStop=/usr/bin/killall -TERM labwc
+Restart=always
+RestartSec=2
+KillSignal=SIGTERM
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target
